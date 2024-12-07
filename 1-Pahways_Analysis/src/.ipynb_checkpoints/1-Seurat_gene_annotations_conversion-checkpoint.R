@@ -18,13 +18,13 @@ old_work_dir <- "/home/ronan.jouanard/NeuroDev_ADD/spatial_transcriptomics/proje
 input_model_organism <- "rat"
 output_model_organisms <- c("human", "mouse")
 
-# For human
+# For human gene annotations conversion
 output_dir_human <- sprintf("/home/ronan.jouanard/NeuroDev_ADD/Share_ronan.jouanard/EpiReg_suite/1-Pathways_Analysis/output/%s", output_model_organisms[1])
 if (! dir.exists(output_dir_human)) {
     dir.create(output_dir_human, recursive=TRUE, mode="0775")
 }
 
-# For mouse
+# For mouse gene annotations conversion
 output_dir_mouse <- sprintf("/home/ronan.jouanard/NeuroDev_ADD/Share_ronan.jouanard/EpiReg_suite/1-Pathways_Analysis/output/%s", output_model_organisms[2])
 if (! dir.exists(output_dir_mouse)) {
     dir.create(output_dir_mouse, recursive=TRUE, mode="0775")
@@ -126,68 +126,5 @@ seurat_file <- sprintf("%s/20-Count_analysis/10-EpiReg/output/10-SR/TSO_polyA_R1
 load(seurat_file)
 
 # Annotations conversion to human 
-seurat_orth_human <- UpdateSeuratOrth(seurat_obj = seurat_object_whole_clustering, input_species = "rat", output_species = "human")
+expr_data <- seurat_extract(seurat_object_whole_clustering)
 
-# Converted features summary
-rna_expm <- seurat_extract(seu_obj = seurat_object_whole_clustering, assay = "RNA")
-conversion_genes <- orthogene::convert_orthologs(gene_df = rna_expm, gene_output = "columns", input_species = "rat", output_species = "human", non121_strategy = "drop_both_species")
-colnames(conversion_genes)[2] <- "RNA_assay"
-sct_counts_names <- seurat_orth_human[["SCT"]]@counts@Dimnames[[1]]
-names(sct_counts_names) <- sct_counts_names
-
-# Initialize the new column with NA values
-conversion_genes$SCT_assay <- NA
-
-# Match and fill the new column based on conversion_genes$RNA_assay
-matches <- match(conversion_genes$RNA_assay, sct_counts_names)
-conversion_genes$SCT_assay <- sct_counts_names[matches]
-
-# Save converted features summary
-output_dir_summary_human <- sprintf("%s/summary", output_dir_human)
-if (! dir.exists(output_dir_summary_human)) {
-    dir.create(output_dir_summary_human, recursive=TRUE, mode="0775")
-}
-conversion_summary_file <- file.path(output_dir_summary_human, sprintf("%s_features_conversion_summary.csv", output_model_organisms[1]))
-write.csv(conversion_genes, conversion_summary_file, row.names = FALSE)
-
-# Annotations conversion to mouse 
-seurat_orth_mouse <- UpdateSeuratOrth(seurat_obj = seurat_object_whole_clustering, input_species = "rat", output_species = "mouse")
-
-# Converted features summary
-rna_expm <- seurat_extract(seu_obj = seurat_object_whole_clustering, assay = "RNA")
-conversion_genes <- orthogene::convert_orthologs(gene_df = rna_expm, gene_output = "columns", input_species = "rat", output_species = "mouse", non121_strategy = "drop_both_species")
-colnames(conversion_genes)[2] <- "RNA_assay"
-sct_counts_names <- seurat_orth_mouse[["SCT"]]@counts@Dimnames[[1]]
-names(sct_counts_names) <- sct_counts_names
-
-# Initialize the new column with NA values
-conversion_genes$SCT_assay <- NA
-
-# Match and fill the new column based on conversion_genes$RNA_assay
-matches <- match(conversion_genes$RNA_assay, sct_counts_names)
-conversion_genes$SCT_assay <- sct_counts_names[matches]
-
-# Save converted features summary
-output_dir_summary_mouse <- sprintf("%s/summary", output_dir_mouse)
-if (! dir.exists(output_dir_summary_mouse)) {
-    dir.create(output_dir_summary_mouse, recursive=TRUE, mode="0775")
-}
-conversion_summary_file <- file.path(output_dir_summary_mouse, sprintf("%s_features_conversion_summary.csv", output_model_organisms[2]))
-write.csv(conversion_genes, conversion_summary_file, row.names = FALSE)
-
-# Save seurat objects
-## Human
-output_dir_seurat_human <- sprintf("%s/seurat_obj", output_dir_human)
-if (! dir.exists(output_dir_seurat_human)) {
-    dir.create(output_dir_seurat_human, recursive=TRUE, mode="0775")
-}
-
-save(seurat_orth_human, file = file.path(output_dir_seurat_human, "seurat_orth_human.RData"))
-
-## Mouse
-output_dir_seurat_mouse <- sprintf("%s/seurat_obj", output_dir_mouse)
-if (! dir.exists(output_dir_seurat_mouse)) {
-    dir.create(output_dir_seurat_mouse, recursive=TRUE, mode="0775")
-}
-
-save(seurat_orth_mouse, file = file.path(output_dir_seurat_mouse, "seurat_orth_mouse.RData"))
