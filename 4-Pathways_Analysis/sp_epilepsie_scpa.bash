@@ -7,4 +7,4 @@
 cd /home/adufour/work
 source /home/adufour/.bashrc
 source activate scpa
-Rscript /home/adufour/work/SCPA_epilepsie.R
+Rscript /home/adufour/work/scripts/R_script/SCPA_epilepsie.R
