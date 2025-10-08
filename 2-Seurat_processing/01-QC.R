@@ -725,20 +725,3 @@ colnames(colData(spe_in_tissue))[which(colnames(colData(spe_in_tissue)) == "slop
 plot_qc <- plotQC(spe_in_tissue, type="spots", x_coord="pxl_col_in_fullres", y_coord="pxl_row_in_fullres", discard=qc_colname)
 plot_qc$layers[[1]]$aes_params$size <- 2
 print(plot_qc)
-                                      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

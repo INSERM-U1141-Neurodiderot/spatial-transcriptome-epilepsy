@@ -669,6 +669,3 @@ for (i in 1:(nb_sections/nb_SpatialFeaturePlot_per_page)) {
 }
 dev.off()
 
-
-
-

@@ -811,7 +811,3 @@ p <- ggplot(hippocampus_reclustering_mean_silhouette_df, aes(x=resolution, y=.da
 print(p)
 dev.off()
 
-
-
-
-
