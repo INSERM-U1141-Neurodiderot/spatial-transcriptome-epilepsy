@@ -1,8 +1,7 @@
 # spatial-transcriptome-epilepsy
 
 ## About
-This repository contains all scripts to reproduce the results from the paper : 
-Paper available in preprint at: 
+This repository houses the codes for the spatial transcriptome analyses presented in the study **Spatiotemporal transcriptomic mapping reveals region-specific glial activation and astrocyte subtype shifts in epileptogenesis beyond the hippocampus**.
 
 ## Summary
 
@@ -10,14 +9,13 @@ Paper available in preprint at:
 ## Repository
 The repository is structured as follows:
 
-- Jupyter Notebook used for [main analysis](archr)
-- Ressource used for [SCENIC +](SCENIC+)
-- Cellranger script used for [matrice generation](cellranger)
-- Script used for [Cluster assignation](cluster_assignation)
-- Environnment used in [conda](conda_env)
+- 1. Space ranger used for [Visium data processing](1-Space_ranger)
+- 2. Seurat processing used for [multi-slice integration and clustering](2-Seurat_processing)
+- 3. [Pathways Analysis](3-Pathways_Analysis)
+- 4. Cell type mappig used for [Cell type deconvolution](4-Cell_type_mapping)
 
 ## Data
-- All raw sequencing data and associated metadata are available in GEO under accession number ********
+- The raw and processed data are available on GEO with accession number [GSE301260](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE301260).
 
 ## Questions
-For questions contact "******"
+For questions contact "andree.delahaye@inserm.fr"
