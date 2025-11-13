@@ -1,5 +1,7 @@
 # spatial-transcriptome-epilepsy
 
+[![DOI](https://zenodo.org/badge/820992414.svg)](https://doi.org/10.5281/zenodo.17599591)
+
 
 ## About
 This repository houses the codes for the spatial transcriptome analyses presented in the study **Spatiotemporal transcriptomic mapping reveals region-specific glial activation and astrocyte subtype shifts in epileptogenesis beyond the hippocampus**.
